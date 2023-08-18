@@ -1,6 +1,6 @@
 FROM spritsail/alpine:3.18
 
-ARG VERSION=3.0.5
+ARG VERSION=3.0.6
 
 LABEL org.opencontainers.image.authors="Spritsail <acme.sh@spritsail.io>" \
       org.opencontainers.image.title="acme.sh" \
@@ -25,6 +25,7 @@ RUN apk --no-cache add -f \
     curl -sSL https://github.com/Neilpang/acme.sh/archive/${VERSION}.tar.gz | tar xz --strip-components=1 && \
     chmod 755 ./acme.sh && \
     rm -rf .github Dockerfile README.md && \
+    sed -i 's/^RENEW_SKIP=2$/RENEW_SKIP=0/' /opt/acme.sh/acme.sh && \
     ln -sfv /opt/acme.sh/acme.sh /usr/local/bin
 
 VOLUME /acme.sh
